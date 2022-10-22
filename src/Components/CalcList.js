@@ -404,7 +404,6 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
         }
 
 
-
         function verificarRede(ip, mascara) {
 
             ip = addZeroes(ipDec1, 8) + '.' + addZeroes(ipDec2, 8) + '.' + addZeroes(ipDec3, 8) + '.' + addZeroes(ipDec4, 8);
@@ -447,6 +446,106 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
         }
     }
 
+    broadcastAdress() {
+
+        var ipSplit = this.props.ip.split('.');
+
+        var ipDec1 = ipSplit[0].toString(2);
+        var ipDec2 = ipSplit[1].toString(2);
+        var ipDec3 = ipSplit[2].toString(2);
+        var ipDec4 = ipSplit[3].toString(2);
+
+        var maskSplit = this.props.maskSubNet.split('.');
+
+        var maskDec1 = maskSplit[0].toString(2);
+        var maskDec2 = maskSplit[1].toString(2);
+        var maskDec3 = maskSplit[2].toString(2);
+        var maskDec4 = maskSplit[3].toString(2);
+
+        function toDecimal(bin) {
+            let dec = 0;
+
+            for (let c = bin.length - 1, i = 0; c >= 0; c--, i++) {
+                dec += bin[c] * Math.pow(2, i);
+            }
+
+            return dec;
+        }
+
+        function addZeroes(num, len) {
+            var numberWithZeroes = String(num);
+            var counter = numberWithZeroes.length;
+
+            while (counter < len) {
+                numberWithZeroes = "0" + numberWithZeroes;
+                counter++;
+            }
+
+            return numberWithZeroes;
+        }
+
+        function negacaoBinaria(value) {
+            return value === "1" ? "0" : "1";
+          }
+          
+          function negacaoBinariaQuatroOctetos(value) {
+            let valueNegado = "";
+            for (let i = 0; i < value.length; i++) {
+              let valueBin = value.charAt(i);
+              if (valueBin === ".") {
+                valueNegado += valueBin;
+              } else {
+                valueNegado += negacaoBinaria(valueBin);
+              }
+            }
+            return valueNegado;
+          }
+
+
+        function verificarBroadcast(ip, mascara) {
+
+            ip = addZeroes(ipDec1, 8) + '.' + addZeroes(ipDec2, 8) + '.' + addZeroes(ipDec3, 8) + '.' + addZeroes(ipDec4, 8);
+            mascara = negacaoBinariaQuatroOctetos( 
+                addZeroes(maskDec1, 8) + '.' + addZeroes(maskDec2, 8) + '.' + addZeroes(maskDec3, 8) + '.' + addZeroes(maskDec4, 8)
+            );
+
+            let broadcast = "";
+
+            for (let i = 0; i < ip.length; i++) {
+                let ipBin = ip.charAt(i);
+                let mascaraBin = mascara.charAt(i);
+
+                if (ipBin === "." || mascaraBin === ".") {
+                    broadcast += ".";
+                } else {
+                    broadcast += ipBin | mascaraBin;
+                }
+            }
+
+            return broadcast;
+        }
+
+        var foundBroad = verificarBroadcast(ipSplit, maskSplit).split('.');
+
+        var foundBroad2 = toDecimal(foundBroad[0]) + '.' + toDecimal(foundBroad[1]) + '.' + toDecimal(foundBroad[2]) + '.' + toDecimal(foundBroad[3]) ;
+
+        if (this.props.broadcastAdress == '') {
+
+            this.props.broadcastAdress = foundBroad2;
+
+            return {
+                textAlign: 'justify',
+                marginLeft: 5,
+                borderBottomWidth: 2,
+                borderBottomColor: '#fff',
+                borderRadius: 10,
+                padding: 3,
+                color: '#fff',
+                fontSize: 17
+            }
+        }
+    }
+
 
     render() {
         return (
@@ -464,7 +563,7 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
                     </View>
 
                     <View style={{ flexDirection: 'column' }}>
-                        <Text style={style.calcListText}>Classe Ip : </Text>
+                        <Text style={style.calcListText}>Classificação da rede : </Text>
                         <Text style={this.classIp()}>{this.props.netClass}</Text>
                     </View>
 
@@ -493,10 +592,10 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
                         <Text style={this.netAdress()}>{this.props.netAdress}</Text>
                     </View>
 
-                    {/*<View style={{ flexDirection: 'column' }}>
+                    <View style={{ flexDirection: 'column' }}>
                         <Text style={style.calcListText}>Endereço de Broadcast : </Text>
                         <Text style={this.broadcastAdress()}>{this.props.broadcastAdress}</Text>
-                    </View>*/}
+                    </View>
 
                     <View style={{ flexDirection: 'column' }}>
                         <Text style={style.calcListText}>Porção total de rede : </Text>
