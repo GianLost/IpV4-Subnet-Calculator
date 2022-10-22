@@ -9,21 +9,15 @@ import {
 
 class CalcList extends Component { // Componente CalcList onde ocorrem os cálculos de rede e conversões;
 
-    convertIpBin() { // Converte a propriedade ip em binário
+    convertIpBin() { // -- Converte a propriedade ip em binário
 
-        var ipSplit = this.props.ip.split('.'); // ipPlit converte o props "ip" em um array contendo 4 índices;
+        var ipSplit = this.props.ip.split('.'); // ipSplit converte o props "ip" em um array contendo 4 índices;
 
-        /* Armazenando cada índice do array convertidos em inteiro, cada indíce em uma variável; */
-        var ipDec1 = parseInt(ipSplit[0]);
-        var ipDec2 = parseInt(ipSplit[1]);
-        var ipDec3 = parseInt(ipSplit[2]);
-        var ipDec4 = parseInt(ipSplit[3]);
-
-        /* Convertendo o valor de cada índice no seu respectivo valor binário e armazenando os valores em variáveis; */
-        var ipDec1Fix = ipDec1.toString(2);
-        var ipDec2Fix = ipDec2.toString(2);
-        var ipDec3Fix = ipDec3.toString(2);
-        var ipDec4Fix = ipDec4.toString(2);
+        /* Armazenando cada índice do array convertidos em binário, cada indíce em uma variável; */
+        var ipDec1 = parseInt(ipSplit[0]).toString(2);
+        var ipDec2 = parseInt(ipSplit[1]).toString(2);
+        var ipDec3 = parseInt(ipSplit[2]).toString(2);
+        var ipDec4 = parseInt(ipSplit[3]).toString(2);
 
         /* A função adicionar zero a esquerda faz o que diz, um Ip obrigatoriamente é formado de octetos(8bits), porém ao utilizar a conversão de decimal para binário com o toString() a função não considera o formato de oito bits, essa função então complementa o índice para sempre se manter em formato de 32 bits ou 4 octetos; */
 
@@ -40,7 +34,7 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
         }
 
         // ipBin Agrupa os índices no formato de 4 octetos (00000000.00000000.00000000.00000000);     
-        var ipBin = addZeroes(ipDec1Fix, 8) + "." + addZeroes(ipDec2Fix, 8) + "." + addZeroes(ipDec3Fix, 8) + "." + addZeroes(ipDec4Fix, 8);
+        var ipBin = addZeroes(ipDec1, 8) + "." + addZeroes(ipDec2, 8) + "." + addZeroes(ipDec3, 8) + "." + addZeroes(ipDec4, 8);
         if (this.props.ip != '') { // Valido se a propriedade ip foi preenchida, caso seja verdadeiro passo um novo valor para a propriedade;
 
             this.props.ip = ipBin // Atríbuindo o valor da conversão binária para a propriedade ip;
@@ -61,15 +55,10 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
     convertMaskSubNetBin() { // onverte a máscara de rede em binário seguindo os mesmos padrões da conversão do Ip;
 
         var maskSubNetSplit = this.props.maskSubNet.split('.');
-        var maskSubNetDec1 = parseInt(maskSubNetSplit[0]);
-        var maskSubNetDec2 = parseInt(maskSubNetSplit[1]);
-        var maskSubNetDec3 = parseInt(maskSubNetSplit[2]);
-        var maskSubNetDec4 = parseInt(maskSubNetSplit[3]);
-
-        var maskSubNetDec1Fix = maskSubNetDec1.toString(2);
-        var maskSubNetDec2Fix = maskSubNetDec2.toString(2);
-        var maskSubNetDec3Fix = maskSubNetDec3.toString(2);
-        var maskSubNetDec4Fix = maskSubNetDec4.toString(2);
+        var maskSubNetDec1 = parseInt(maskSubNetSplit[0]).toString(2);
+        var maskSubNetDec2 = parseInt(maskSubNetSplit[1]).toString(2);
+        var maskSubNetDec3 = parseInt(maskSubNetSplit[2]).toString(2);
+        var maskSubNetDec4 = parseInt(maskSubNetSplit[3]).toString(2);
 
         function addZeroes(num, len) {
             var numberWithZeroes = String(num);
@@ -86,10 +75,11 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
             return numberWithZeroes;
         }
 
-        var maskSubNetBin = addZeroes(maskSubNetDec1Fix, 8) + "." + addZeroes(maskSubNetDec2Fix, 8) + "." + addZeroes(maskSubNetDec3Fix, 8) + "." + addZeroes(maskSubNetDec4Fix, 8);
+        var maskSubNetBin = addZeroes(maskSubNetDec1, 8) + "." + addZeroes(maskSubNetDec2, 8) + "." + addZeroes(maskSubNetDec3, 8) + "." + addZeroes(maskSubNetDec4, 8);
 
         if (this.props.maskSubNet != '') {
             this.props.maskSubNet = maskSubNetBin;
+
             return {
                 textAlign: 'justify',
                 marginLeft: 5,
@@ -100,20 +90,23 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
                 color: '#fff',
                 fontSize: 17
             }
+
         }
     }
+
 
     searchPrefix() {
 
         /* Calcula o CIDR da rede com base ná fórmula padrão de 2^n onde n= Bits 1 utilizados para a sub-rede; */
 
-        var str = this.props.maskSubNet;
-        var regex = /1/g;
+        var mask = this.props.maskSubNet;
 
-        var count = (str.match(regex)).length;
+        var prefixCidr = (mask.match(/1/g)).length;
 
         if (this.props.maskSubNetPrefix == '') {
-            this.props.maskSubNetPrefix = "/" + count; /* Atribuindo o valor de prefixo da rede(CIDR) ao props maskSubNetPrefix; */
+
+            this.props.maskSubNetPrefix = "/" + prefixCidr; /* Atribuindo o valor de prefixo da rede(CIDR) ao props maskSubNetPrefix; */
+
             return {
                 textAlign: 'justify',
                 marginLeft: 5,
@@ -131,9 +124,7 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
 
         var maskSubNetSplit = this.props.maskSubNet.split('.'); // maskSubNetSplit converte o props "maskSubNet" em um array contendo 4 índices;
 
-        var searchMixedOctet = [maskSubNetSplit[0], maskSubNetSplit[1], maskSubNetSplit[2], maskSubNetSplit[3]]; // searchMixedOctet armazena os os octetos da máscara de sub-rede;
-
-        var foundOctet = searchMixedOctet.find(element => element != '11111111'); // Busca os os octetos diferentes ao formato "00000000" e "11111111";
+        var foundOctet = maskSubNetSplit.find(element => element != '11111111'); // Busca os os octetos diferentes ao formato "00000000" e "11111111";
 
         function toDecimal(bin)  // Função que irá converter os índices do array de binário para decimal;
         {
@@ -161,6 +152,7 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
                 fontSize: 17
             }
         }
+
     }
 
     classIp() {
@@ -256,10 +248,40 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
 
     netQuantity() {
 
-        var jump = 256 - this.props.mixedOctet;
+        var cidr = this.props.maskSubNetPrefix.split('/');
 
-        if (this.props.totalNet == '') {
-            this.props.totalNet = 256 / jump;
+        var cidrDecA = parseInt(cidr[1]) - 8;
+        var cidrDecB = parseInt(cidr[1]) - 16;
+        var cidrDecC = parseInt(cidr[1]) - 24;
+
+        if (this.props.netClass == 'Classe A') {
+            this.props.totalNet = Math.pow(2, cidrDecA);
+
+            return {
+                textAlign: 'justify',
+                marginLeft: 5,
+                borderBottomWidth: 2,
+                borderBottomColor: '#fff',
+                borderRadius: 10,
+                padding: 3,
+                color: '#fff',
+                fontSize: 17
+            }
+        } else if (this.props.netClass == 'Classe B') {
+            this.props.totalNet = Math.pow(2, cidrDecB);
+
+            return {
+                textAlign: 'justify',
+                marginLeft: 5,
+                borderBottomWidth: 2,
+                borderBottomColor: '#fff',
+                borderRadius: 10,
+                padding: 3,
+                color: '#fff',
+                fontSize: 17
+            }
+        } else if (this.props.netClass == 'Classe C') {
+            this.props.totalNet = Math.pow(2, cidrDecC);
 
             return {
                 textAlign: 'justify',
@@ -316,6 +338,11 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
                     <View style={{ flexDirection: 'column' }}>
                         <Text style={style.calcListText}>Classificação da rede : </Text>
                         <Text style={this.classIp()}>{this.props.netClass}</Text>
+                    </View>
+
+                    <View style={{ flexDirection: 'column' }}>
+                        <Text style={style.calcListText}>Máscara de sub-rede : </Text>
+                        <Text style={style.calcListTextInput}>{this.props.maskSubNet}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'column' }}>

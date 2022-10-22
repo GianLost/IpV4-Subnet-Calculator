@@ -72,7 +72,7 @@ class NetCalculator extends Component {
 
                             <TouchableOpacity
 
-                                onPress={() => this.Register(this.state.ip, this.state.maskSubNet, this.state.maskSubNetPrefix, this.state.mixedOctet, this.state.netClass, this.state.netAdress, this.state.totalSubNet, this.state.broadcastAdress, this.state.totalNet)}
+                                onPress={() => this.Register(this.state.ip, this.state.maskSubNet, this.state.maskSubNetPrefix, this.state.mixedOctet, this.state.netClass, this.state.netAdress, this.state.totalSubNet, this.state.broadcastAdress, this.state.totalNet )}
                                 style={{ alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}>
 
                                 <Icon name='md-calculator' size={30} color='#fff'></Icon>
