@@ -297,6 +297,52 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
 
     }
 
+    subNetQuantity() {
+
+        var jump = 256 - this.props.mixedOctet;
+
+        if (this.props.netClass == 'Classe A') {
+            this.props.totalNet = 256 / jump;
+
+            return {
+                textAlign: 'justify',
+                marginLeft: 5,
+                borderBottomWidth: 2,
+                borderBottomColor: '#fff',
+                borderRadius: 10,
+                padding: 3,
+                color: '#fff',
+                fontSize: 17
+            }
+        } else if (this.props.netClass == 'Classe B') {
+            this.props.totalNet = 256 / jump;
+
+            return {
+                textAlign: 'justify',
+                marginLeft: 5,
+                borderBottomWidth: 2,
+                borderBottomColor: '#fff',
+                borderRadius: 10,
+                padding: 3,
+                color: '#fff',
+                fontSize: 17
+            }
+        } else if (this.props.netClass == 'Classe C') {
+            this.props.totalNet = 256 / jump;
+
+            return {
+                textAlign: 'justify',
+                marginLeft: 5,
+                borderBottomWidth: 2,
+                borderBottomColor: '#fff',
+                borderRadius: 10,
+                padding: 3,
+                color: '#fff',
+                fontSize: 17
+            }
+        }
+    }
+
     hostsQuantity() {
 
         var octet = this.props.maskSubNetPrefix.split('/');
@@ -305,6 +351,88 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
 
         if (this.props.totalSubNet == '') {
             this.props.totalSubNet = pow - 2;
+
+            return {
+                textAlign: 'justify',
+                marginLeft: 5,
+                borderBottomWidth: 2,
+                borderBottomColor: '#fff',
+                borderRadius: 10,
+                padding: 3,
+                color: '#fff',
+                fontSize: 17
+            }
+        }
+    }
+
+    netAdress() {
+
+        var ipSplit = this.props.ip.split('.');
+
+        var ipDec1 = ipSplit[0].toString(2);
+        var ipDec2 = ipSplit[1].toString(2);
+        var ipDec3 = ipSplit[2].toString(2);
+        var ipDec4 = ipSplit[3].toString(2);
+
+        var maskSplit = this.props.maskSubNet.split('.');
+
+        var maskDec1 = maskSplit[0].toString(2);
+        var maskDec2 = maskSplit[1].toString(2);
+        var maskDec3 = maskSplit[2].toString(2);
+        var maskDec4 = maskSplit[3].toString(2);
+
+        function toDecimal(bin) {
+            let dec = 0;
+
+            for (let c = bin.length - 1, i = 0; c >= 0; c--, i++) {
+                dec += bin[c] * Math.pow(2, i);
+            }
+
+            return dec;
+        }
+
+        function addZeroes(num, len) {
+            var numberWithZeroes = String(num);
+            var counter = numberWithZeroes.length;
+
+            while (counter < len) {
+                numberWithZeroes = "0" + numberWithZeroes;
+                counter++;
+            }
+
+            return numberWithZeroes;
+        }
+
+
+
+        function verificarRede(ip, mascara) {
+
+            ip = addZeroes(ipDec1, 8) + '.' + addZeroes(ipDec2, 8) + '.' + addZeroes(ipDec3, 8) + '.' + addZeroes(ipDec4, 8);
+            mascara = addZeroes(maskDec1, 8) + '.' + addZeroes(maskDec2, 8) + '.' + addZeroes(maskDec3, 8) + '.' + addZeroes(maskDec4, 8);
+
+            let rede = "";
+
+            for (let i = 0; i < ip.length; i++) {
+                let ipBin = ip.charAt(i);
+                let mascaraBin = mascara.charAt(i);
+
+                if (ipBin === "." || mascaraBin === ".") {
+                    rede += ipBin || mascaraBin;
+                } else {
+                    rede += ipBin & mascaraBin;
+                }
+            }
+
+            return rede;
+        }
+
+        var foundOctet = verificarRede(ipSplit, maskSplit).split('.');
+
+        var foundOctet2 = toDecimal(foundOctet[0]) + '.' + toDecimal(foundOctet[1]) + '.' + toDecimal(foundOctet[2]) + '.' + toDecimal(foundOctet[3]) ;
+
+        if (this.props.netAdress == '') {
+
+            this.props.netAdress = foundOctet2;
 
             return {
                 textAlign: 'justify',
@@ -336,7 +464,7 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
                     </View>
 
                     <View style={{ flexDirection: 'column' }}>
-                        <Text style={style.calcListText}>Classificação da rede : </Text>
+                        <Text style={style.calcListText}>Classe Ip : </Text>
                         <Text style={this.classIp()}>{this.props.netClass}</Text>
                     </View>
 
@@ -361,23 +489,29 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
                     </View>
 
                     <View style={{ flexDirection: 'column' }}>
-                        <Text style={style.calcListText}>Quantidade de rede/sub-rede : </Text>
+                        <Text style={style.calcListText}>Endereço da rede : </Text>
+                        <Text style={this.netAdress()}>{this.props.netAdress}</Text>
+                    </View>
+
+                    {/*<View style={{ flexDirection: 'column' }}>
+                        <Text style={style.calcListText}>Endereço de Broadcast : </Text>
+                        <Text style={this.broadcastAdress()}>{this.props.broadcastAdress}</Text>
+                    </View>*/}
+
+                    <View style={{ flexDirection: 'column' }}>
+                        <Text style={style.calcListText}>Porção total de rede : </Text>
                         <Text style={this.netQuantity()}>{this.props.totalNet}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'column' }}>
-                        <Text style={style.calcListText}>Hosts : </Text>
-                        <Text style={this.hostsQuantity()}>{this.props.totalSubNet}</Text>
+                        <Text style={style.calcListText}>Quantidade de sub-redes : </Text>
+                        <Text style={this.subNetQuantity()}>{this.props.totalNet}</Text>
                     </View>
 
-                    {/*<View style={{ flexDirection: 'column' }}>
-                        <Text style={style.calcListText}>Endereço da rede : </Text>
-                        <Text style={this.netAdress()}>{this.props.netAdress}</Text>
-                    </View>
                     <View style={{ flexDirection: 'column' }}>
-                        <Text style={style.calcListText}>Endereço de Broadcast : </Text>
-                        <Text style={this.broadcastAdress()}>{this.props.broadcastAdress}</Text>
-                    </View>*/}
+                        <Text style={style.calcListText}>Hosts disponíveis por sub-rede: </Text>
+                        <Text style={this.hostsQuantity()}>{this.props.totalSubNet}</Text>
+                    </View>
 
                     <View style={style.cadButtonView}>
                         <TouchableOpacity
@@ -405,7 +539,7 @@ const style = StyleSheet.create({
         maxHeight: '100%',
         minHeight: '50%',
         marginTop: 10,
-        height: 700,
+        height: 1000,
         padding: 5,
     },
 
