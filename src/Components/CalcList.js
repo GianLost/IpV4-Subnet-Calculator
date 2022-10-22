@@ -9,6 +9,19 @@ import {
 
 class CalcList extends Component { // Componente CalcList onde ocorrem os cálculos de rede e conversões;
 
+     styleInput = StyleSheet.create({
+
+        Inputs: {
+        textAlign: 'justify',
+        marginLeft: 5,
+        borderBottomWidth: 2,
+        borderBottomColor: '#fff',
+        borderRadius: 10,
+        padding: 3,
+        color: '#fff',
+        fontSize: 15
+        }
+    })
     convertIpBin() { // -- Converte a propriedade ip em binário
 
         var ipSplit = this.props.ip.split('.'); // ipSplit converte o props "ip" em um array contendo 4 índices;
@@ -39,16 +52,7 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
 
             this.props.ip = ipBin // Atríbuindo o valor da conversão binária para a propriedade ip;
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
         }
     }
 
@@ -80,19 +84,10 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
         if (this.props.maskSubNet != '') {
             this.props.maskSubNet = maskSubNetBin;
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
 
         }
-    }
+    } 
 
 
     searchPrefix() {
@@ -107,16 +102,7 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
 
             this.props.maskSubNetPrefix = "/" + prefixCidr; /* Atribuindo o valor de prefixo da rede(CIDR) ao props maskSubNetPrefix; */
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
         }
     }
 
@@ -141,16 +127,7 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
             /* Se mixedOctet possuir valores diferentes de "00000000" e "11111111" atribuo um novo valor ao props; */
             this.props.mixedOctet = toDecimal(foundOctet); // Atribuíndo novo valor caso a condição seja satisfeita;
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
         }
 
     }
@@ -163,18 +140,7 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
 
             this.props.netClass = "Classe A";
 
-            return {
-
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-
-            }
+            return this.styleInput.Inputs;
 
         } else if (splitIp[0].slice(0, 2) === "10") {
 
@@ -197,52 +163,19 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
 
             this.props.netClass = "Classe C";
 
-            return {
-
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-
-            }
+            return this.styleInput.Inputs;
 
         } else if (splitIp[0].slice(0, 4) === "1110") {
 
             this.props.netClass = "Classe D";
 
-            return {
-
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-
-            }
+            return this.styleInput.Inputs;
 
         } else if (splitIp[0].slice(0, 4) === "1111") {
 
             this.props.netClass = "Classe E";
 
-            return {
-
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-
-            }
+            return this.styleInput.Inputs;
         }
     }
 
@@ -257,42 +190,18 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
         if (this.props.netClass == 'Classe A') {
             this.props.totalNet = Math.pow(2, cidrDecA);
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
+
         } else if (this.props.netClass == 'Classe B') {
             this.props.totalNet = Math.pow(2, cidrDecB);
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
+
         } else if (this.props.netClass == 'Classe C') {
             this.props.totalNet = Math.pow(2, cidrDecC);
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
+
         }
 
     }
@@ -304,42 +213,18 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
         if (this.props.netClass == 'Classe A') {
             this.props.totalNet = 256 / jump;
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
+
         } else if (this.props.netClass == 'Classe B') {
             this.props.totalNet = 256 / jump;
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
+
         } else if (this.props.netClass == 'Classe C') {
             this.props.totalNet = 256 / jump;
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
+
         }
     }
 
@@ -352,16 +237,7 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
         if (this.props.totalSubNet == '') {
             this.props.totalSubNet = pow - 2;
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
         }
     }
 
@@ -427,22 +303,14 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
 
         var foundOctet = verificarRede(ipSplit, maskSplit).split('.');
 
-        var foundOctet2 = toDecimal(foundOctet[0]) + '.' + toDecimal(foundOctet[1]) + '.' + toDecimal(foundOctet[2]) + '.' + toDecimal(foundOctet[3]) ;
+        var foundOctet2 = toDecimal(foundOctet[0]) + '.' + toDecimal(foundOctet[1]) + '.' + toDecimal(foundOctet[2]) + '.' + toDecimal(foundOctet[3]);
 
         if (this.props.netAdress == '') {
 
             this.props.netAdress = foundOctet2;
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
+
         }
     }
 
@@ -486,26 +354,26 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
 
         function negacaoBinaria(value) {
             return value === "1" ? "0" : "1";
-          }
-          
-          function negacaoBinariaQuatroOctetos(value) {
+        }
+
+        function negacaoBinariaQuatroOctetos(value) {
             let valueNegado = "";
             for (let i = 0; i < value.length; i++) {
-              let valueBin = value.charAt(i);
-              if (valueBin === ".") {
-                valueNegado += valueBin;
-              } else {
-                valueNegado += negacaoBinaria(valueBin);
-              }
+                let valueBin = value.charAt(i);
+                if (valueBin === ".") {
+                    valueNegado += valueBin;
+                } else {
+                    valueNegado += negacaoBinaria(valueBin);
+                }
             }
             return valueNegado;
-          }
+        }
 
 
         function verificarBroadcast(ip, mascara) {
 
             ip = addZeroes(ipDec1, 8) + '.' + addZeroes(ipDec2, 8) + '.' + addZeroes(ipDec3, 8) + '.' + addZeroes(ipDec4, 8);
-            mascara = negacaoBinariaQuatroOctetos( 
+            mascara = negacaoBinariaQuatroOctetos(
                 addZeroes(maskDec1, 8) + '.' + addZeroes(maskDec2, 8) + '.' + addZeroes(maskDec3, 8) + '.' + addZeroes(maskDec4, 8)
             );
 
@@ -527,34 +395,25 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
 
         var foundBroad = verificarBroadcast(ipSplit, maskSplit).split('.');
 
-        var foundBroad2 = toDecimal(foundBroad[0]) + '.' + toDecimal(foundBroad[1]) + '.' + toDecimal(foundBroad[2]) + '.' + toDecimal(foundBroad[3]) ;
+        var foundBroad2 = toDecimal(foundBroad[0]) + '.' + toDecimal(foundBroad[1]) + '.' + toDecimal(foundBroad[2]) + '.' + toDecimal(foundBroad[3]);
 
         if (this.props.broadcastAdress == '') {
 
             this.props.broadcastAdress = foundBroad2;
 
-            return {
-                textAlign: 'justify',
-                marginLeft: 5,
-                borderBottomWidth: 2,
-                borderBottomColor: '#fff',
-                borderRadius: 10,
-                padding: 3,
-                color: '#fff',
-                fontSize: 17
-            }
+            return this.styleInput.Inputs;
         }
     }
 
 
     render() {
         return (
-            <View style={{ width: '100%', maxHeight: '100%', alignItems: 'center', margin: 10 }}>
+            <View style={{ width: '100%', maxHeight: '100%', alignItems: 'center', margin: 10, display: 'flex' }}>
                 <View style={style.calcListView}>
 
                     <View style={{ flexDirection: 'column' }}>
                         <Text style={style.calcListText}>Ip : </Text>
-                        <Text style={style.calcListTextInput}>{this.props.ip}</Text>
+                        <Text style={this.styleInput.Inputs}>{this.props.ip}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'column' }}>
@@ -563,13 +422,13 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
                     </View>
 
                     <View style={{ flexDirection: 'column' }}>
-                        <Text style={style.calcListText}>Classificação da rede : </Text>
+                        <Text style={style.calcListText}>Classe do endereço Ip : </Text>
                         <Text style={this.classIp()}>{this.props.netClass}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'column' }}>
                         <Text style={style.calcListText}>Máscara de sub-rede : </Text>
-                        <Text style={style.calcListTextInput}>{this.props.maskSubNet}</Text>
+                        <Text style={this.styleInput.Inputs}>{this.props.maskSubNet}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'column' }}>
@@ -598,17 +457,12 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
                     </View>
 
                     <View style={{ flexDirection: 'column' }}>
-                        <Text style={style.calcListText}>Porção total de rede : </Text>
+                        <Text style={style.calcListText}>Total de  Sub-redes : </Text>
                         <Text style={this.netQuantity()}>{this.props.totalNet}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'column' }}>
-                        <Text style={style.calcListText}>Quantidade de sub-redes : </Text>
-                        <Text style={this.subNetQuantity()}>{this.props.totalNet}</Text>
-                    </View>
-
-                    <View style={{ flexDirection: 'column' }}>
-                        <Text style={style.calcListText}>Hosts disponíveis por sub-rede: </Text>
+                        <Text style={style.calcListText}>Hosts disponíveis por Sub-rede: </Text>
                         <Text style={this.hostsQuantity()}>{this.props.totalSubNet}</Text>
                     </View>
 
@@ -630,6 +484,7 @@ class CalcList extends Component { // Componente CalcList onde ocorrem os cálcu
 const style = StyleSheet.create({
 
     calcListView: {
+    
         alignContent: 'center',
         justifyContent: 'space-around',
         backgroundColor: '#248f8d',
@@ -638,20 +493,10 @@ const style = StyleSheet.create({
         maxHeight: '100%',
         minHeight: '50%',
         marginTop: 10,
-        height: 1000,
+        height: 750,
         padding: 5,
     },
 
-    calcListTextInput: {
-        textAlign: 'justify',
-        marginLeft: 5,
-        borderBottomWidth: 2,
-        borderBottomColor: '#fff',
-        borderRadius: 10,
-        padding: 3,
-        color: '#fff',
-        fontSize: 17
-    },
     calcListText: {
         fontSize: 18,
         fontWeight: 'bold',

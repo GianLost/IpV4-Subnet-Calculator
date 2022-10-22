@@ -13,7 +13,7 @@ class HeaderComponent extends Component {
     render() {
         return (
             <View style={style.headerView}>
-                <Icon style={{ marginRight: 100 }} name='cloud' size={45} color='#fff'></Icon>
+                <Icon style={{ marginRight: 80 }} name='cloud' size={40} color='#89b399'></Icon>
                 <Text style={style.textHeader}>SubNet Calculator</Text>
             </View>
         )
@@ -27,15 +27,15 @@ const style = StyleSheet.create({
         padding: 10,
         flexDirection: 'row',
         width: '100%',
-        height: 55,
-        backgroundColor: '#248f8d'
+        height: 65,
+        backgroundColor: '#fff'
     },
     textHeader: {
-        color: '#fff',
+        color: '#89b399',
         fontSize: 22,
         fontWeight: 'bold',
         fontFamily: 'fantasy',
-        marginRight: 5
+        marginRight: 10
     },
 })
 

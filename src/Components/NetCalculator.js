@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Icon from 'react-native-vector-icons/Ionicons'
+// import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ItemDatabase from '../DataBase/ItemDatabase';
 import CalcItem from '../Models/CalcItem';
 import CalcList from './CalcList';
@@ -62,7 +63,13 @@ class NetCalculator extends Component {
             <View>
                 <View style={style.mainView}>
 
+                    
+
                     <View style={style.calcInputView}>
+
+                    <View>
+                        <Icon name='access-point-network' size={50} color= '#fff'></Icon>
+                    </View>
 
                         <TextInput maxLength={15} placeholderTextColor='#f2f2f' keyboardType='numeric' placeholder='Endereço da rede: (Ex: 192.168.0.10)' style={style.calcInputText} onChangeText={(typeValue) => { this.setState({ ip: typeValue }) }}></TextInput>
 
@@ -72,10 +79,9 @@ class NetCalculator extends Component {
 
                             <TouchableOpacity
 
-                                onPress={() => this.Register(this.state.ip, this.state.maskSubNet, this.state.maskSubNetPrefix, this.state.mixedOctet, this.state.netClass, this.state.netAdress, this.state.totalSubNet, this.state.broadcastAdress, this.state.totalNet )}
-                                style={{ alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}>
-
-                                <Icon name='md-calculator' size={30} color='#fff'></Icon>
+                                onPress={() => this.Register(this.state.ip, this.state.maskSubNet, this.state.maskSubNetPrefix, this.state.mixedOctet, this.state.netClass, this.state.netAdress, this.state.totalSubNet, this.state.broadcastAdress, this.state.totalNet )}>
+                                
+                                <Text style={style.cadButtonText} > Calcular <Icon name='ip-network' size={20} color='#89b399'> </Icon> </Text>
 
                             </TouchableOpacity>
 
@@ -130,33 +136,44 @@ const style = StyleSheet.create({
         height: 300,
         backgroundColor: '#248f8d',
         padding: 10,
-        borderRadius: 10
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#fff',
     },
     calcInputText: {
-        width: '100%',
+        width: '95%',
         height: 55,
-        borderBottomWidth: 2,
-        borderBottomColor: '#fff',
+        borderTopWidth: 0.5,
+        borderRightWidth: 0.5,
+        borderLeftWidth: 0.5,
+        borderBottomWidth: 3,
+        backgroundColor: '#89b399',
+        textAlign: 'center',
+        padding: 15,
         borderRadius: 10,
-        marginTop: 0,
         color: '#fff',
         fontSize: 17
     },
     cadButtonView: {
+        alignItems: 'center',
+        justifyContent: 'space-around',
         marginTop: 10,
-        marginLeft: 150,
-        width: 55,
-        height: 55,
-        borderRadius: 100,
+        padding: 10,
+        width:130,
+        height: 45,
+        borderRadius: 10,
         borderWidth: 2,
-        borderColor: '#fff',
-        backgroundColor: '#96c3a6',
+        borderColor: '#89b399',
+        backgroundColor: '#fefeeb'
     },
     cadButtonText: {
-        color: '#248f8d',
-        fontSize: 18,
+        textShadowColor: '#fff',
+        textAlign: 'center',
+        color: '#89b399',
+        fontSize: 15,
         fontFamily: 'fantasy',
-        fontWeight: 'bold',
+        fontWeight: 'bold'
+        
     },
     calcListView: {
         width: '100%',
